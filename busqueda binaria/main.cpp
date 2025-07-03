@@ -1,0 +1,78 @@
+#include <iostream>
+
+using namespace std;
+
+struct Vendedor {
+int legajo;
+string nombre;
+};
+
+int buscar(Vendedor vendedores[],int cantidad, int legajo){
+    int inicio = 0;
+    int fin = cantidad - 1;
+    while(fin >= inicio) {
+        int mitad = inicio + (fin - inicio)/2;
+
+        if(vendedores[mitad].legajo==legajo){
+            return mitad;
+
+        }
+        if (vendedores[mitad].legajo > legajo){
+            fin = mitad - 1;
+        }  else {
+            inicio = mitad +1;
+        }
+    }
+
+
+    return -1;
+
+}
+
+int main()
+{
+Vendedor vendedores[9];
+
+vendedores[0].legajo = 1;
+vendedores[0].nombre = "Pepe";
+
+vendedores[1].legajo = 2;
+vendedores[1].nombre = "Juan";
+
+vendedores[2].legajo = 3;
+vendedores[2].nombre = "Maria";
+
+vendedores[3].legajo = 4;
+vendedores[3].nombre = "Maite";
+
+vendedores[4].legajo = 5;
+vendedores[4].nombre = "Flor";
+
+vendedores[5].legajo = 6;
+vendedores[5].nombre = "Rita";
+
+vendedores[6].legajo = 7;
+vendedores[6].nombre = "Diana";
+
+vendedores[7].legajo = 8;
+vendedores[7].nombre = "Marisol";
+
+vendedores[8].legajo = 9;
+vendedores[8].nombre = "Ana";
+
+int legajoABuscar;
+cout<< "Ingrese el legajo a buscar: "<<endl;
+cin>> legajoABuscar;
+while(legajoABuscar!=-1){
+int pos = buscar(vendedores, 9,legajoABuscar);
+
+if (pos >= 0){
+    cout << vendedores[pos].nombre<<endl;
+}
+
+cout<< "Ingrese el legajo a buscar: "<<endl;
+cin>> legajoABuscar;
+}
+
+    return 0;
+}
