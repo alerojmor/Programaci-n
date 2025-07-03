@@ -32,7 +32,7 @@ void insertionSort(int calificaciones[], int cantidad)
     }
 }
 
-void mostrarCalificaciones(int calificaciones[], int cantidad)
+/*void mostrarCalificaciones(int calificaciones[], int cantidad)
 {
     cout << "Calificaciones ordenadas: ";
     for (int i = 0; i < cantidad; i++)
@@ -40,7 +40,7 @@ void mostrarCalificaciones(int calificaciones[], int cantidad)
         cout << calificaciones[i] << " ";
     }
     cout << endl;
-}
+}*/
 
 int busquedaBinaria(int calificaciones[], int cantidad, int valor)
 {
@@ -70,7 +70,7 @@ int main()
     int calificaciones[TAMAÑO];
     ingresarCalificaciones(calificaciones, TAMAÑO);
     insertionSort(calificaciones, TAMAÑO);
-    mostrarCalificaciones(calificaciones, TAMAÑO);
+    //mostrarCalificaciones(calificaciones, TAMAÑO);
 
     int valor;
     cout << "Ingrese una calificación a buscar: ";
