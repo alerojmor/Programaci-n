@@ -1,0 +1,72 @@
+#include <iostream>
+using namespace std;
+
+#define CANTIDAD 5
+
+void ingresoValores(int v[])
+{
+
+    cout<<"Por favor ingrese los elementos del vector: "<<endl;
+    for(int i=0; i<CANTIDAD; i++)
+    {
+        cin>>v[i];
+
+    }
+
+
+    for(int i=0;i<CANTIDAD;i++)
+    {
+        cout<<v[i];
+        cout<<endl;
+    }
+
+
+}
+
+void burbujeo(int arr[], int n)
+{
+    int i, j, aux;
+    for (i = 0; i < n-1; i++)
+    {
+
+// Los ultimos i elementos ya estan ordenados
+        for (j = 0; j < n-i-1; j++)
+        {
+            if (arr[j] > arr[j+1])
+            {
+                aux = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = aux;
+            }
+        }
+    }
+}
+void burbujeoMejorado(int arr[], int n)
+{
+    int i, j, aux;
+    i = 0;
+    bool ordenado = false;
+    while (i < n && !ordenado)
+    {
+        ordenado = true; // Arranco asumiendo que si esta ordenado
+// Los ultimos i elementos ya estan ordenados
+        for (j = 0; j < n-i-1; j++)
+        {
+            if (arr[j] > arr[j+1])
+            {
+                aux = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = aux;
+                ordenado = false; // Cambio el flag si hice un swap
+            }
+        }
+        i++;
+    }
+}
+
+int main()
+{
+    int miVector = [];
+    ingresoValores(miVector);
+    return 0;
+}

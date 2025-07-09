@@ -1,0 +1,50 @@
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    int numero=0;
+    int sumatoria=0;
+    float promedio=0;
+    int contador=0;
+    cout<<"Ingrese un numero: "<<endl;
+    cin>>numero;
+    for(int i=0; i<5; i++)
+    {
+        if
+        (numero!=0)
+        {
+            if(numero>100)
+            {
+                promedio+=numero;
+                sumatoria+=numero;
+                contador++;
+
+            }
+            else if(numero<-10)
+            {
+                sumatoria+=numero;
+            }
+            cout<<"Ingrese un numero: "<<endl;
+            cin>>numero;
+        }
+        else
+        {
+            sumatoria=0;
+            promedio=0;
+        }
+
+    }
+    if(contador==0)
+    {
+        cout<<0<<endl;
+        cout<<"La sumatoria es: "<<sumatoria<<endl;
+    }
+    else
+    {
+        cout<<"El promedio es: "<<promedio/contador<<endl;;
+        cout<<"La sumatoria es: "<<sumatoria<<endl;
+    }
+
+    return 0;
+}

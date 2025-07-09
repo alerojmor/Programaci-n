@@ -1,0 +1,52 @@
+/*3. Ingresar un valor entero N (< 20). A continuación ingresar un conjunto VEC de N componentes.
+A partir de este conjunto generar otro FACT en el que cada elemento sea el factorial del elemento
+homólogo de VEC. Finalmente imprimir ambos vectores a razón de un valor de cada uno por renglón*/
+
+#include<iostream>
+using namespace std;
+
+long double factorial(int n){
+
+
+long double   factorial=1;
+   for(int i=1;i<=n;i++){
+
+        factorial = factorial * i;
+   }
+
+    return factorial;
+}
+
+int main()
+{
+    int n;
+    cout<<"Por favor ingrese un valor de n < 20: ";
+    cin>>n;
+    int vec[n];
+    long double fac[n];
+    long double fact;
+    if(n<=20){
+
+                for(int i=0;i<n;i++){
+
+                                    cin>>vec[i];
+                                    cout<<endl;
+                                   
+
+                                    }
+
+                }else {
+                cout<<"Por favor ingrese un valor correcto para n: "<<endl;
+                }
+
+
+                for(int i=0;i<n;i++){
+                cout<<vec[i]<<endl;}
+
+                for(int i=1;i<=n;i++){
+                fac[i] = factorial(i);
+                cout<<fac[i]<<endl;}
+
+
+    return 0;
+}

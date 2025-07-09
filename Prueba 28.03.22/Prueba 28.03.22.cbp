@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Prueba 28.03.22" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Prueba 28" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="../../../../../../run/user/1000/gvfs/google-drive:host=gmail.com,user=alerojasunivalle/1D-p_jS7odUzp-Zd5X3FIx7QOl7gPX_72/1XtoUYEVqclw5WYln6_gv_u_FSq_7JKvv/1iZC54C74Lw9hGjTKoOKiGscfVaQLKDPs/1FF3bv-n7-4pKsucdtXnShSnn7bEItDtF" />
+		<Unit filename="main.cpp" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>
