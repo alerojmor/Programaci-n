@@ -94,7 +94,7 @@ struct Viaje {
 
 };
 
-struct ConductorIndice {
+struct Indice {
     int idConductor;
     string nombre;
     string apellido;
@@ -115,69 +115,69 @@ int buscarConductor(Conductor conductores[], int cantidad, int idBuscado)
 }
 
 // 3. Función para generar el vector de conductores con su índice de calidad
-void apareo(Conductor conductores[], int n, Viaje viajes[], int m, ConductorIndice conductoresIndice[], int &k)
+void apareo(Conductor conductores[], int n, Viaje viajes[], int m, Indice indice[], int &k)
 {
     for (int i = 0; i < n; i++) {
-        conductoresIndice[i].idConductor = conductores[i].idConductor;
-        conductoresIndice[i].nombre = conductores[i].nombre;
-        conductoresIndice[i].apellido = conductores[i].apellido;
-        conductoresIndice[i].zonaTrabajo = conductores[i].zonaTrabajo;
-        conductoresIndice[i].distanciaTotal = 0;
-        conductoresIndice[i].indiceCalidad = 0;
+        indice[i].idConductor = conductores[i].idConductor;
+        indice[i].nombre = conductores[i].nombre;
+        indice[i].apellido = conductores[i].apellido;
+        indice[i].zonaTrabajo = conductores[i].zonaTrabajo;
+        indice[i].distanciaTotal = 0;
+        indice[i].indiceCalidad = 0;
     }
     k = n;
 
     for (int j = 0; j < m; j++) {
         int pos = buscarConductor(conductores, n, viajes[j].idConductor);
         if (pos != -1) {
-            conductoresIndice[pos].distanciaTotal += viajes[j].distancia;
-            conductoresIndice[pos].indiceCalidad += (viajes[j].calificacion * viajes[j].distancia);
+            indice[pos].distanciaTotal += viajes[j].distancia;
+            indice[pos].indiceCalidad += (viajes[j].calificacion * viajes[j].distancia);
         }
     }
 
     for (int i = 0; i < k; i++) {
-        if (conductoresIndice[i].distanciaTotal > 0) {
-            conductoresIndice[i].indiceCalidad /= conductoresIndice[i].distanciaTotal;
+        if (indice[i].distanciaTotal > 0) {
+            indice[i].indiceCalidad /= indice[i].distanciaTotal;
         }
     }
 }
 
 // 4. Función para ordenar por zona
-void ordenarPorZona(ConductorIndice conductoresIndice[], int k) {
+void ordenarPorZona(Indice indice[], int k) {
     for (int i = 0; i < k - 1; i++) {
         for (int j = i + 1; j < k; j++) {
-            if (conductoresIndice[i].zonaTrabajo > conductoresIndice[j].zonaTrabajo)
-            {       
-                // Intercambiar conductoresIndice[i] y conductoresIndice[j]
-                ConductorIndice temp = conductoresIndice[i];
-                conductoresIndice[i] = conductoresIndice[j];
-                conductoresIndice[j] = temp;
+            if (indice[i].zonaTrabajo > indice[j].zonaTrabajo)
+            {
+                // Intercambiar indice[i] y indice[j]
+                Indice temp = indice[i];
+                indice[i] = indice[j];
+                indice[j] = temp;
             }
         }
     }
 }
 
-void mostrarConductoresIndice(ConductorIndice conductoresIndice[], int k) {
+void mostrarConductoresIndice(Indice indice[], int k) {
     cout << "Conductores con Índice de Calidad:" << endl;
     for (int i = 0; i < k; i++) {
-        cout << "ID: " << conductoresIndice[i].idConductor
-             << ", Nombre: " << conductoresIndice[i].nombre
-             << ", Apellido: " << conductoresIndice[i].apellido
-             << ", Distancia Total: " << conductoresIndice[i].distanciaTotal
-             << ", Índice de Calidad: " << conductoresIndice[i].indiceCalidad
-             << ", Zona: " << conductoresIndice[i].zonaTrabajo << endl;
+        cout << "ID: " << indice[i].idConductor
+             << ", Nombre: " << indice[i].nombre
+             << ", Apellido: " << indice[i].apellido
+             << ", Distancia Total: " << indice[i].distanciaTotal
+             << ", Índice de Calidad: " << indice[i].indiceCalidad
+             << ", Zona: " << indice[i].zonaTrabajo << endl;
     }
 }
 
 // 5. Generar reporte por zona
-void generarReportePorZona(ConductorIndice conductoresIndice[], int k) {
+void generarReportePorZona(Indice indice[], int k) {
     float totalDistancia[3] = {0, 0, 0}; // Total distancia por zona
     float indiceCalidad[3] = {0, 0, 0}; // Suma de índices de calidad por zona
     int count[3] = {0, 0, 0}; // Contador de conductores por zona
     for (int i = 0; i < k; i++) {
-        int zona = conductoresIndice[i].zonaTrabajo - 1; // Ajustar índice de zona
-        totalDistancia[zona] += conductoresIndice[i].distanciaTotal;
-        indiceCalidad[zona] += conductoresIndice[i].indiceCalidad;
+        int zona = indice[i].zonaTrabajo - 1; // Ajustar índice de zona
+        totalDistancia[zona] += indice[i].distanciaTotal;
+        indiceCalidad[zona] += indice[i].indiceCalidad;
         count[zona]++;
     }
     // Mostrar reporte
@@ -193,7 +193,7 @@ void generarReportePorZona(ConductorIndice conductoresIndice[], int k) {
         cout << "  Total Distancia: " << totalDistancia[i] << " km" << endl;
         cout << "  Indice de Calidad: ";
         if (count[i] > 0) {
-            cout << (indiceCalidad[i] / count[i]) << endl;
+            cout << (float(indiceCalidad[i]) / count[i]) << endl;
         } else {
             cout << "No hay conductores en esta zona." << endl;
         }
@@ -221,22 +221,22 @@ int main() {
     };
     int m = sizeof(viajes) / sizeof(viajes[0]);
 
-    ConductorIndice conductoresIndice[10]; // Suponiendo un máximo de 10 conductores
+    Indice indice[10]; // Suponiendo un máximo de 10 conductores
     int k;
-    
-    apareo(conductores, n, viajes, m, conductoresIndice, k);
-    
+
+    apareo(conductores, n, viajes, m, indice, k);
+
     // Calcular índice de calidad
     for (int i = 0; i < k; i++) {
-        conductoresIndice[i].distanciaTotal = viajes[i].distancia;
-        conductoresIndice[i].indiceCalidad = (viajes[i].calificacion * viajes[i].distancia) / viajes[i].distancia;
+        indice[i].distanciaTotal = viajes[i].distancia;
+        indice[i].indiceCalidad = (viajes[i].calificacion * viajes[i].distancia) / viajes[i].distancia;
     }
 
-    ordenarPorZona(conductoresIndice, k);
-    mostrarConductoresIndice(conductoresIndice, k);
+    ordenarPorZona(indice, k);
+    mostrarConductoresIndice(indice, k);
     cout << endl;
-    
-    generarReportePorZona(conductoresIndice, k);
+
+    generarReportePorZona(indice, k);
 
     return 0;
 }
