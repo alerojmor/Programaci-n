@@ -131,13 +131,17 @@ void apareo(Conductor conductores[], int n, Viaje viajes[], int m, Indice indice
         int pos = buscarConductor(conductores, n, viajes[j].idConductor);
         if (pos != -1) {
             indice[pos].distanciaTotal += viajes[j].distancia;
-            indice[pos].indiceCalidad += (viajes[j].calificacion * viajes[j].distancia);
+            //cout << "Conductor ID: " << indice[pos].idConductor << " - Agregando viaje de " << viajes[j].distancia << " km." << endl;
+            indice[pos].indiceCalidad += viajes[j].calificacion * viajes[j].distancia; // Puntos del viaje
+            //cout << "Conductor ID: " << indice[pos].idConductor << " - Calificación: " << viajes[j].calificacion << ", Distancia: " << viajes[j].distancia << " km." << endl;
         }
     }
 
     for (int i = 0; i < k; i++) {
         if (indice[i].distanciaTotal > 0) {
-            indice[i].indiceCalidad /= indice[i].distanciaTotal;
+            // Calcular el índice de calidad
+            indice[i].indiceCalidad /= ((float)indice[i].distanciaTotal); // Índice de calidad = sumatoria(Puntos de cada viaje) / sumatoria(distancia total)
+            //cout << "Conductor ID: " << indice[i].idConductor << " - Índice de Calidad: " << indice[i].indiceCalidad << endl;
         }
     }
 }
@@ -149,15 +153,15 @@ void ordenarPorZona(Indice indice[], int k) {
             if (indice[i].zonaTrabajo > indice[j].zonaTrabajo)
             {
                 // Intercambiar indice[i] y indice[j]
-                Indice temp = indice[i];
+                Indice aux = indice[i];
                 indice[i] = indice[j];
-                indice[j] = temp;
+                indice[j] = aux;
             }
         }
     }
 }
 
-void mostrarConductoresIndice(Indice indice[], int k) {
+/*void mostrarConductoresIndice(Indice indice[], int k) {
     cout << "Conductores con Índice de Calidad:" << endl;
     for (int i = 0; i < k; i++) {
         cout << "ID: " << indice[i].idConductor
@@ -167,18 +171,18 @@ void mostrarConductoresIndice(Indice indice[], int k) {
              << ", Índice de Calidad: " << indice[i].indiceCalidad
              << ", Zona: " << indice[i].zonaTrabajo << endl;
     }
-}
+}*/
 
 // 5. Generar reporte por zona
 void generarReportePorZona(Indice indice[], int k) {
     float totalDistancia[3] = {0, 0, 0}; // Total distancia por zona
     float indiceCalidad[3] = {0, 0, 0}; // Suma de índices de calidad por zona
-    int count[3] = {0, 0, 0}; // Contador de conductores por zona
+    int contador[3] = {0, 0, 0}; // Contador de conductores por zona
     for (int i = 0; i < k; i++) {
         int zona = indice[i].zonaTrabajo - 1; // Ajustar índice de zona
         totalDistancia[zona] += indice[i].distanciaTotal;
         indiceCalidad[zona] += indice[i].indiceCalidad;
-        count[zona]++;
+        contador[zona]++;
     }
     // Mostrar reporte
     cout << "Reporte por Zona:" << endl;
@@ -192,11 +196,17 @@ void generarReportePorZona(Indice indice[], int k) {
         }
         cout << "  Total Distancia: " << totalDistancia[i] << " km" << endl;
         cout << "  Indice de Calidad: ";
-        if (count[i] > 0) {
-            cout << (float(indiceCalidad[i]) / count[i]) << endl;
+        if (contador[i] > 0) {
+            cout << (indiceCalidad[i] / contador[i]) << endl;
         } else {
             cout << "No hay conductores en esta zona." << endl;
         }
+    }
+}
+void indiceCalidad(Indice indice[], Viaje viajes[], int k) {
+    for (int i = 0; i < k; i++) {
+        indice[i].distanciaTotal = viajes[i].distancia;
+        indice[i].indiceCalidad = (viajes[i].calificacion * viajes[i].distancia) / viajes[i].distancia;
     }
 }
 
@@ -217,7 +227,11 @@ int main() {
         {"E", "F", 03012023, 12, 3, 15.0, 3},
         {"G", "H", 04012023, 13, 1, 20.0, 2},
         {"I", "J", 05012023, 14, 2, 25.0, 4},
-        {"K", "L", 06012023, 15, 3, 30.0, 5}
+        {"K", "L", 06012023, 15, 3, 30.0, 5},
+        {"M", "N", 07012023, 16, 4, 35.0, 1},
+        {"O", "P", 14112023, 17, 5, 40.0, 3},
+        {"Q", "R", 15112023, 18, 1, 45.0, 4},
+        {"S", "T", 16112023, 19, 2, 50.0, 5}
     };
     int m = sizeof(viajes) / sizeof(viajes[0]);
 
@@ -227,13 +241,10 @@ int main() {
     apareo(conductores, n, viajes, m, indice, k);
 
     // Calcular índice de calidad
-    for (int i = 0; i < k; i++) {
-        indice[i].distanciaTotal = viajes[i].distancia;
-        indice[i].indiceCalidad = (viajes[i].calificacion * viajes[i].distancia) / viajes[i].distancia;
-    }
+    indiceCalidad(indice, viajes, k);
 
     ordenarPorZona(indice, k);
-    mostrarConductoresIndice(indice, k);
+    //mostrarConductoresIndice(indice, k);
     cout << endl;
 
     generarReportePorZona(indice, k);
